@@ -9,10 +9,10 @@
 
 let SignInSummary =
     SignInLogs
-    | summarize SignInCount = count(), DistinctIPs = dcount(IPAddress) by UserPrincipalName, bin(TimeGenerated, 1d);
+        | summarize SignInCount = count(), DistinctIPs = dcount(IPAddress) by UserPrincipalName, bin(TimeGenerated, 1d);
 let AuditSummary =
     AuditLogs
-    | summarize AuditCount = count() by tostring(parse_json(InitiatedBy).user.userPrincipalName), bin(TimeGenerated, 1d);
+        | summarize AuditCount = count() by tostring(parse_json(InitiatedBy).user.userPrincipalName), bin(TimeGenerated, 1d);
 SignInSummary
-| join kind=inner AuditSummary on $left.UserPrincipalName == $right.user_userPrincipalName and $left.TimeGenerated == $right.TimeGenerated
-| where SignInCount > 50 or DistinctIPs > 10 or AuditCount > 20
+    | join kind=inner AuditSummary on $left.UserPrincipalName == $right.user_userPrincipalName and $left.TimeGenerated == $right.TimeGenerated
+    | where SignInCount > 50 or DistinctIPs > 10 or AuditCount > 20
