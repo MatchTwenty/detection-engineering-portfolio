@@ -1,0 +1,19 @@
+// Detection Name: Unauthorized Role Assignment
+// Description: Detects high-privilege role assignments outside approved workflows.
+// Author: Michael Jost
+// Date: 2025-09-01
+// Data Source: Entra ID Audit Logs
+// MITRE ATT&CK: T1069.003 - Permission Groups Discovery (Cloud)
+// Severity: High
+// False Positives: Approved admin changes
+// Notes: Align with IAM change management
+
+AuditLogs
+  | where Category == "RoleManagement"
+  | where OperationName in ("Add member to role", "Add directory role")
+  | extend Actor = tostring(parse_json(InitiatedBy).user.userPrincipalName)
+  | extend TargetUser = tostring(TargetResources[0].userPrincipalName)
+  | extend RoleName = tostring(TargetResources[0].modifiedProperties[0].newValue)
+  | where RoleName in ("Global Administrator", "Privileged Role Administrator", "Security Administrator")
+  | where Actor !in ("iam-admin@contoso.com")
+  | project TimeGenerated, Actor, TargetUser, RoleName
