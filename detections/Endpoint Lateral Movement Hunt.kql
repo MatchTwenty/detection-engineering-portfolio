@@ -1,7 +1,7 @@
 // Detection Name: Endpoint Lateral Movement Hunt
 // Description: Identifies potential lateral movement via remote access tools.
 // Author: Michael Jost
-// Date: 2026-09-02
+// Date: 2026-8-14
 // Data Source: DeviceNetworkEvents / ProcessCreation
 // MITRE ATT&CK: T1021 - Remote Services
 // Severity: High
