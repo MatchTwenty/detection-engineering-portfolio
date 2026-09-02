@@ -1,0 +1,19 @@
+// Detection Name: Suspicious Application Registration
+// Description: Detects anomalous or unauthorized application registrations in Entra ID.
+// Author: Michael Jost
+// Date: 2025-07-30
+// Data Source: Entra ID Audit Logs
+// MITRE ATT&CK: T1098.003 - Account Manipulation: Additional Cloud Credentials
+// Severity: High
+// False Positives: Legitimate admin activity, DevOps automation
+// Notes: Tune based on known admin accounts and service principal patterns
+
+AuditLogs
+  | where Category == "ApplicationManagement"
+  | where OperationName in ("Add service principal", "Add application")
+  | extend InitiatingUser = tostring(parse_json(InitiatedBy).user.userPrincipalName)
+  | extend AppDisplayName = tostring(TargetResources[0].displayName)
+  | extend AppId = tostring(TargetResources[0].id)
+  | where InitiatingUser !in ("known-admin@contoso.com", "automation-account@contoso.com")
+  | summarize count() by InitiatingUser, AppDisplayName, AppId, bin(TimeGenerated, 1h)
+  | where count_ >= 1
