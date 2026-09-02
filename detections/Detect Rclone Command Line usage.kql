@@ -1,0 +1,3 @@
+DeviceProcessEvents
+  | where ProcessCommandLine contains @"rclone" and ProcessCommandLine has_any ("--source", "--destination", "copy", "sync", "config", "--transfers", "--log-file", "crypt", "--include-from")
+  | project TimeGenerated, DeviceName, ProcessCommandLine, FolderPath, FileName, ProcessCreationTime, AccountName, AccountUpn
