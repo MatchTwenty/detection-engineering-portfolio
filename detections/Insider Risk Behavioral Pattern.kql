@@ -1,0 +1,14 @@
+// Detection Name: Insider Risk Behavioral Pattern
+// Description: Detects unusual file access and data exfiltration behavior.
+// Author: Michael Jost
+// Date: 2026-04-17
+// Data Source: FileActivity, DLP logs
+// MITRE ATT&CK: T1041 - Exfiltration Over C2 Channel
+// Severity: High
+// Notes: Use with DLP and proxy logs
+
+FileActivity
+  | where ActionType in ("FileDownloaded", "FileCopied", "FileSynced")
+  | extend User = tostring(UserPrincipalName)
+  | summarize FileActions = count() by User, bin(TimeGenerated, 1d)
+  | where FileActions > 500
