@@ -1,0 +1,14 @@
+{
+  "name": "Rclone Command Line Usage",
+  "description": "Detects execution of Rclone with command-line arguments commonly used for data exfiltration.",
+  "severity": "High",
+  "query": "<PASTE KQL HERE>",
+  "tactics": ["Exfiltration"],
+  "techniques": ["T1041"],
+  "triggerOperator": "GreaterThan",
+  "triggerThreshold": 0,
+  "kind": "Scheduled",
+  "enabled": true,
+  "queryFrequency": "PT1H",
+  "queryPeriod": "PT1H"
+}
