@@ -1,0 +1,18 @@
+// Detection Name: Cloud Identity Anomalies
+// Description: Detects unusual identity behavior in Azure/Entra ID.
+// Author: Michael Jost
+// Date: 2026-05-15
+// Data Source: SignInLogs, AuditLogs
+// MITRE ATT&CK: T1087 - Account Discovery
+// Severity: Medium
+// Notes: Use as a hunting starting point
+
+let SignInSummary =
+    SignInLogs
+    | summarize SignInCount = count(), DistinctIPs = dcount(IPAddress) by UserPrincipalName, bin(TimeGenerated, 1d);
+let AuditSummary =
+    AuditLogs
+    | summarize AuditCount = count() by tostring(parse_json(InitiatedBy).user.userPrincipalName), bin(TimeGenerated, 1d);
+SignInSummary
+| join kind=inner AuditSummary on $left.UserPrincipalName == $right.user_userPrincipalName and $left.TimeGenerated == $right.TimeGenerated
+| where SignInCount > 50 or DistinctIPs > 10 or AuditCount > 20
