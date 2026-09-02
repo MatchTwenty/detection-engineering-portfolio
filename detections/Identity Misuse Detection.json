@@ -1,0 +1,16 @@
+{
+  "name": "Identity Misuse Detection",
+  "description": "Detects unusual authentication patterns suggesting credential misuse or account compromise.",
+  "severity": "High",
+  "query": "<PASTE KQL HERE>",
+  "tactics": ["Credential Access", "Initial Access"],
+  "techniques": ["T1078"],
+  "triggerOperator": "GreaterThan",
+  "triggerThreshold": 0,
+  "suppressionDuration": "PT1H",
+  "suppressionEnabled": false,
+  "kind": "Scheduled",
+  "enabled": true,
+  "queryFrequency": "PT24H",
+  "queryPeriod": "PT24H"
+}
