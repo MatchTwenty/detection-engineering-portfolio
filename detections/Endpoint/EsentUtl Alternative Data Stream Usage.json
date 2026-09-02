@@ -1,0 +1,14 @@
+{
+  "name": "EsentUtl Alternative Data Stream Usage",
+  "description": "Detects use of EsentUtl.exe to interact with NTFS Alternate Data Streams.",
+  "severity": "High",
+  "query": "<PASTE KQL HERE>",
+  "tactics": ["Defense Evasion"],
+  "techniques": ["T1564.004"],
+  "triggerOperator": "GreaterThan",
+  "triggerThreshold": 0,
+  "kind": "Scheduled",
+  "enabled": true,
+  "queryFrequency": "PT1H",
+  "queryPeriod": "PT1H"
+}
