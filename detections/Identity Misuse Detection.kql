@@ -1,0 +1,21 @@
+// Detection Name: Identity Misuse Detection
+// Description: Detects unusual authentication patterns suggesting credential misuse.
+// Author: Michael Jost
+// Date: 2026-03-02
+// Data Source: SignInLogs
+// MITRE ATT&CK: T1078 - Valid Accounts
+// Severity: High
+// False Positives: Travel, VPN, shared admin accounts
+// Notes: Combine with risk signals and device info
+
+SignInLogs
+  | extend UserPrincipalName = tostring(UserPrincipalName)
+  | extend IPAddress = tostring(IPAddress)
+  | extend Location = tostring(LocationDetails.countryOrRegion)
+  | summarize
+      FirstSeen = min(TimeGenerated),
+      LastSeen = max(TimeGenerated),
+      DistinctIPs = dcount(IPAddress),
+      DistinctCountries = dcount(Location)
+    by UserPrincipalName, bin(TimeGenerated, 1d)
+  | where DistinctCountries > 2 or DistinctIPs > 10
