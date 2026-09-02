@@ -1,3 +1,13 @@
+// Detection Name: 
+// Description: 
+// Author: Michael Jost
+// Date: 
+// Data Source: Microsoft Sentinel
+// MITRE ATT&CK: 
+// Severity: High
+// False Positives: 
+// Notes: Tune based on service principal creation patterns
+
 let 90DayStart = ago(90d);
 let 90DayEnd = ago(2d);
 let startDateTime = ago(1d);
