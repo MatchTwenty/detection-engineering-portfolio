@@ -2,6 +2,8 @@ Welcome to my Detection Engineering & Automation Portfolio — a curated collect
 
 I specialize in Microsoft Sentinel, Azure Data Explorer (ADX), KQL, Cortex XSOAR, CI/CD detection‑as‑code workflows, and OpenTelemetry (OTel) pipelines, with experience developing high‑fidelity detections and automated response playbooks across enterprise and critical‑infrastructure environments.
 
+➡️ View all detections: [detections-index.md](detections/detections-index.md)
+
 📌 What This Repository Contains
 🔍 Detection Engineering
 High‑fidelity detection rules written in KQL, mapped to MITRE ATT&CK, and designed for Microsoft Sentinel / Azure Data Explorer.
