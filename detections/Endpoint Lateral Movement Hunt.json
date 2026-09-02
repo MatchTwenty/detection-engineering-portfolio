@@ -1,0 +1,16 @@
+{
+  "name": "Endpoint Lateral Movement Hunt",
+  "description": "Identifies potential lateral movement via remote access tools.",
+  "severity": "High",
+  "query": "<PASTE KQL HERE>",
+  "tactics": ["Lateral Movement"],
+  "techniques": ["T1021"],
+  "triggerOperator": "GreaterThan",
+  "triggerThreshold": 0,
+  "suppressionDuration": "PT1H",
+  "suppressionEnabled": false,
+  "kind": "Scheduled",
+  "enabled": true,
+  "queryFrequency": "PT1H",
+  "queryPeriod": "PT1H"
+}
