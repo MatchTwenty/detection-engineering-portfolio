@@ -1,3 +1,13 @@
+// Detection Name: 
+// Description: 
+// Author: Michael Jost
+// Date: 
+// Data Source: Microsoft Sentinel
+// MITRE ATT&CK: 
+// Severity: High
+// False Positives: 
+// Notes: Tune based on service principal creation patterns
+
 DeviceProcessEvents
   | where ProcessCommandLine contains @"rclone" and ProcessCommandLine has_any ("--source", "--destination", "copy", "sync", "config", "--transfers", "--log-file", "crypt", "--include-from")
   | project TimeGenerated, DeviceName, ProcessCommandLine, FolderPath, FileName, ProcessCreationTime, AccountName, AccountUpn
