@@ -1,0 +1,31 @@
+let 90DayStart = ago(90d);
+let 90DayEnd = ago(2d);
+let startDateTime = ago(1d);
+let endDateTime = now();
+let testlist = externaldata (network: string)[@"https://raw.githubusercontent.com/X4BNet/lists_vpn/main/ipv4.txt"] with (format='txt');
+let previousData = 
+    SigninLogs
+    | where TimeGenerated between (90DayStart .. 90DayEnd)
+    | evaluate ipv4_lookup(testlist, IPAddress, network)
+    | join kind=inner CloudAppEvents on $left.IPAddress == $right.IPAddress
+    | where ConditionalAccessStatus =~ "success"
+    | distinct IPAddress, UserDisplayName, Location, ISP
+    | summarize count() by IPAddress, Location, UserDisplayName, ISP
+    | project IPAddress, Location, UserDisplayName, ISP;
+SigninLogs
+| where TimeGenerated between (startDateTime .. endDateTime)
+| evaluate ipv4_lookup(testlist, IPAddress, network)
+| join kind=inner CloudAppEvents on $left.IPAddress == $right.IPAddress
+| where ConditionalAccessStatus =~ "success"
+| distinct IPAddress, UserDisplayName, Location, ISP
+| join kind=anti (
+    previousData
+    | project UserDisplayName, ISP
+) on $left.UserDisplayName == $right.UserDisplayName, $left.ISP == $right.ISP
+| summarize UniqueIPCount = dcount(IPAddress) by IPAddress, Location, UserDisplayName, ISP
+| summarize make_set(IPAddress) by UserDisplayName, ISP, IPAddress
+| project IPAddress, UserDisplayName, ISP
+| join kind=inner SigninLogs on $left.IPAddress == $right.IPAddress
+| where ConditionalAccessStatus =~ "success"
+| where ISP != "Amazon Web Services"
+| distinct IPAddress, UserDisplayName, ISP
