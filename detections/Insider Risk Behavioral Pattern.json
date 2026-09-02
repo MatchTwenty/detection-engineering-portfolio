@@ -1,0 +1,16 @@
+{
+  "name": "Insider Risk Behavioral Pattern",
+  "description": "Detects unusual file access and potential data exfiltration behavior.",
+  "severity": "High",
+  "query": "<PASTE KQL HERE>",
+  "tactics": ["Exfiltration"],
+  "techniques": ["T1041"],
+  "triggerOperator": "GreaterThan",
+  "triggerThreshold": 0,
+  "suppressionDuration": "PT1H",
+  "suppressionEnabled": false,
+  "kind": "Scheduled",
+  "enabled": true,
+  "queryFrequency": "PT24H",
+  "queryPeriod": "PT24H"
+}
