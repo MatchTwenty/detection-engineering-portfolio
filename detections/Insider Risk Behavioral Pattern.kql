@@ -7,8 +7,8 @@
 // Severity: High
 // Notes: Use with DLP and proxy logs
 
-FileActivity
+DeviceFileEvents
   | where ActionType in ("FileDownloaded", "FileCopied", "FileSynced")
-  | extend User = tostring(UserPrincipalName)
+  | extend User = tostring(RequestAccountName)
   | summarize FileActions = count() by User, bin(TimeGenerated, 1d)
   | where FileActions > 500
