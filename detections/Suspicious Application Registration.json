@@ -1,0 +1,16 @@
+{
+  "name": "Suspicious Application Registration",
+  "description": "Detects anomalous or unauthorized application registrations in Entra ID.",
+  "severity": "High",
+  "query": "<PASTE KQL HERE>",
+  "tactics": ["Persistence", "Privilege Escalation"],
+  "techniques": ["T1098.003"],
+  "triggerOperator": "GreaterThan",
+  "triggerThreshold": 0,
+  "suppressionDuration": "PT1H",
+  "suppressionEnabled": false,
+  "kind": "Scheduled",
+  "enabled": true,
+  "queryFrequency": "PT1H",
+  "queryPeriod": "PT1H"
+}
