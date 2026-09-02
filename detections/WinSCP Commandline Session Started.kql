@@ -1,3 +1,13 @@
+// Detection Name: 
+// Description: 
+// Author: Michael Jost
+// Date: 
+// Data Source: Microsoft Sentinel
+// MITRE ATT&CK: 
+// Severity: High
+// False Positives: 
+// Notes: Tune based on service principal creation patterns
+
 DeviceProcessEvents
   | where ProcessCommandLine has_any ("sftp://","scp://","ftps://")
   | where ProcessCommandLine has_any ("console")
