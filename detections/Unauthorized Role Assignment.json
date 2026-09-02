@@ -1,0 +1,16 @@
+{
+  "name": "Unauthorized Role Assignment",
+  "description": "Detects high-privilege role assignments outside approved IAM workflows.",
+  "severity": "High",
+  "query": "<PASTE KQL HERE>",
+  "tactics": ["Privilege Escalation"],
+  "techniques": ["T1069.003"],
+  "triggerOperator": "GreaterThan",
+  "triggerThreshold": 0,
+  "suppressionDuration": "PT1H",
+  "suppressionEnabled": false,
+  "kind": "Scheduled",
+  "enabled": true,
+  "queryFrequency": "PT1H",
+  "queryPeriod": "PT1H"
+}
