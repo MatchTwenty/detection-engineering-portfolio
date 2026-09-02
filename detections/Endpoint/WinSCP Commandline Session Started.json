@@ -1,0 +1,14 @@
+{
+  "name": "WinSCP Command-Line Session Started",
+  "description": "Detects command-line usage of WinSCP, often used for automated file transfers or exfiltration.",
+  "severity": "High",
+  "query": "<PASTE KQL HERE>",
+  "tactics": ["Exfiltration"],
+  "techniques": ["T1041"],
+  "triggerOperator": "GreaterThan",
+  "triggerThreshold": 0,
+  "kind": "Scheduled",
+  "enabled": true,
+  "queryFrequency": "PT1H",
+  "queryPeriod": "PT1H"
+}
