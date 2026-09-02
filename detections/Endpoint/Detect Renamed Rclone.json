@@ -1,0 +1,14 @@
+{
+  "name": "Renamed Rclone Binary",
+  "description": "Detects execution of Rclone when renamed to evade detection.",
+  "severity": "High",
+  "query": "<PASTE KQL HERE>",
+  "tactics": ["Defense Evasion", "Exfiltration"],
+  "techniques": ["T1036", "T1041"],
+  "triggerOperator": "GreaterThan",
+  "triggerThreshold": 0,
+  "kind": "Scheduled",
+  "enabled": true,
+  "queryFrequency": "PT1H",
+  "queryPeriod": "PT1H"
+}
