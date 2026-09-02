@@ -1,0 +1,15 @@
+// Detection Name: Endpoint Lateral Movement Hunt
+// Description: Identifies potential lateral movement via remote access tools.
+// Author: Michael Jost
+// Date: 2026-09-02
+// Data Source: DeviceNetworkEvents / ProcessCreation
+// MITRE ATT&CK: T1021 - Remote Services
+// Severity: High
+// Notes: Use in hunts and detections
+
+DeviceNetworkEvents
+  | where RemotePort in (3389, 22, 5985)
+  | extend InitiatingProcess = tostring(InitiatingProcessFileName)
+  | extend DeviceName = tostring(DeviceName)
+  | summarize ConnectionCount = count() by DeviceName, InitiatingProcess, RemoteIP, bin(TimeGenerated, 1h)
+  | where ConnectionCount > 10
