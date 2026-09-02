@@ -1,0 +1,14 @@
+{
+  "name": "VPN Connection Previously Unseen by User",
+  "description": "Detects VPN connections from locations or IP ranges not previously associated with the user.",
+  "severity": "Medium",
+  "query": "<PASTE KQL HERE>",
+  "tactics": ["Initial Access"],
+  "techniques": ["T1078"],
+  "triggerOperator": "GreaterThan",
+  "triggerThreshold": 0,
+  "kind": "Scheduled",
+  "enabled": true,
+  "queryFrequency": "PT24H",
+  "queryPeriod": "PT24H"
+}
