@@ -1,0 +1,4 @@
+DeviceProcessEvents
+  | where FileName =~ "esentutl.exe"
+  | where ProcessCommandLine has_all("/y","/d",":","/o")
+  | project TimeGenerated, DeviceName, ActionType, AccountName, ProcessCommandLine, FileName, FolderPath, ProcessId, InitiatingProcessFileName, InitiatingProcessCommandLine, InitiatingProcessFolderPath, InitiatingProcessId, InitiatingProcessParentFileName, InitiatingProcessParentId, InitiatingProcessAccountDomain, InitiatingProcessAccountName, ProcessVersionInfoCompanyName, ProcessVersionInfoProductName, ProcessVersionInfoProductVersion, ProcessVersionInfoInternalFileName, ProcessVersionInfoOriginalFileName, ProcessVersionInfoFileDescription, FileSize, SHA256, DeviceId, ReportId
