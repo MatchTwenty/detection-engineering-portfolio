@@ -1,0 +1,16 @@
+{
+  "name": "Cloud Identity Anomalies",
+  "description": "Detects unusual identity behavior across Azure and Entra ID.",
+  "severity": "Medium",
+  "query": "<PASTE KQL HERE>",
+  "tactics": ["Discovery", "Credential Access"],
+  "techniques": ["T1087"],
+  "triggerOperator": "GreaterThan",
+  "triggerThreshold": 0,
+  "suppressionDuration": "PT2H",
+  "suppressionEnabled": false,
+  "kind": "Scheduled",
+  "enabled": true,
+  "queryFrequency": "PT24H",
+  "queryPeriod": "PT24H"
+}
