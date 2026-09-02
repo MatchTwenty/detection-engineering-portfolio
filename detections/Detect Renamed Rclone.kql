@@ -1,0 +1,4 @@
+DeviceProcessEvents
+  | where ProcessVersionInfoOriginalFileName =~"rclone.exe"
+  | where FileName != "rclone.exe"
+  | project TimeGenerated, DeviceName, ActionType, FolderPath, FileName, InitiatingProcessFileName, InitiatingProcessAccountName, ProcessVersionInfoOriginalFileName
