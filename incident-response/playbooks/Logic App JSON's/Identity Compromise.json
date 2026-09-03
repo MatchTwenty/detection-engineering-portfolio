@@ -1,0 +1,70 @@
+{
+  "definition": {
+    "$schema": "https://schema.management.azure.com/providers/Microsoft.Logic/schemas/2016-06-01/workflowdefinition.json#",
+    "contentVersion": "1.0.0.0",
+    "triggers": {
+      "SentinelAlert": {
+        "type": "Request",
+        "kind": "Http",
+        "inputs": {
+          "schema": {}
+        }
+      }
+    },
+    "actions": {
+      "Get_SignIn_Logs": {
+        "type": "ApiConnection",
+        "inputs": {
+          "method": "get",
+          "path": "/v1.0/auditLogs/signIns",
+          "queries": {
+            "$filter": "userPrincipalName eq @{triggerBody()?['entities'][0]['userPrincipalName']}"
+          },
+          "connectionName": "graphConnection"
+        }
+      },
+      "Get_Risk_Signals": {
+        "type": "ApiConnection",
+        "inputs": {
+          "method": "get",
+          "path": "/v1.0/identityProtection/riskDetections",
+          "connectionName": "graphConnection"
+        }
+      },
+      "Revoke_Tokens": {
+        "type": "ApiConnection",
+        "inputs": {
+          "method": "post",
+          "path": "/v1.0/users/@{triggerBody()?['entities'][0]['userPrincipalName']}/revokeSignInSessions",
+          "connectionName": "graphConnection"
+        }
+      },
+      "Approval_Reset_Password": {
+        "type": "ApiConnection",
+        "inputs": {
+          "method": "post",
+          "path": "/approval/start",
+          "body": {
+            "title": "Reset password for compromised identity",
+            "details": "User: @{triggerBody()?['entities'][0]['userPrincipalName']}"
+          },
+          "connectionName": "approvalsConnection"
+        }
+      },
+      "Notify_Security_Team": {
+        "type": "ApiConnection",
+        "inputs": {
+          "method": "post",
+          "path": "/sendMail",
+          "body": {
+            "subject": "Identity Compromise Detected",
+            "body": "SOAR automation has initiated containment actions.",
+            "to": "security-team@contoso.com"
+          },
+          "connectionName": "office365Connection"
+        }
+      }
+    }
+  },
+  "kind": "Stateful"
+}
